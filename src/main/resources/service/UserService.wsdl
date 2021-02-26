@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.fram.com/UserService/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="UserService"
+	targetNamespace="http://www.fram.com/UserService/"
+	xmlns:user="http://www.fram.com/User">
+	
+	<!-- Types defined in schema file, imported to this file -->
+	 <wsdl:types>
+        <xsd:schema targetNamespace="http://www.fram.com/UserService/">
+            <xsd:import namespace="http://www.fram.com/User"
+                schemaLocation="../entities/User.xsd" />
+        </xsd:schema>
+    </wsdl:types>
+    
+      <!-- Defining messages, i.e request and response, this must match element name in xsd file -->
+      <!-- Register user request type message-->
+	<wsdl:message name="UserRequest">
+		<wsdl:part element="user:UserRequestType" name="parameters" />
+	</wsdl:message>
+	
+	<!-- Register user response type message-->
+	<wsdl:message name="UserResponse">
+		<wsdl:part element="user:UserResponseType"
+			name="parameters" />
+	</wsdl:message>
+	
+	<!-- List of users response type message-->
+	<wsdl:message name="UsersListRequest" />
+	<wsdl:message name="UsersListResponse">
+		<wsdl:part element="user:UsersListResponseType"
+			name="parameters" />
+	</wsdl:message>
+	
+	<!-- get user details type message  -->
+	<wsdl:message name="UserDetailsRequest">
+		<wsdl:part element="user:getUserDetailsRequest" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="userDetailsResponse">
+		<wsdl:part element="user:getUserDetailsResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	
+	<!-- Exceptions handling type message-->
+	<wsdl:message name="BusinessException">
+        <wsdl:part element="user:BusinessFaultType" name="parameters" />
+    </wsdl:message>
+	
+ <!-- Defining the PortType, this represents SEI(service endpoint interface) -->
+	<wsdl:portType name="IUserService">
+		<wsdl:operation name="registerUser">
+			<wsdl:input message="tns:UserRequest" />
+			<wsdl:output message="tns:UserResponse" />
+			<wsdl:fault name="businessException" message="tns:BusinessException" />
+		</wsdl:operation>
+		
+		<wsdl:operation name="getAllUsers">
+			<wsdl:input message="tns:UsersListRequest"/>
+      		<wsdl:output message="tns:UsersListResponse"/>
+		</wsdl:operation>
+		
+		<wsdl:operation name="getUserDetails">
+			<wsdl:input message="tns:UserDetailsRequest"/>
+      		<wsdl:output message="tns:userDetailsResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+		
+<!-- Defining Binding, here we specify the type of transport to use, i.e http over soap, and style doc literal is used here -->
+	<wsdl:binding name="RegisterUserServiceSOAP"
+		type="tns:IUserService">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="registerUser">
+			<soap:operation
+				soapAction="http://www.fram.com/services/UserService/registerUser" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="businessException">
+                <soap:fault name="businessException" use="literal" />
+            </wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:service name="UserService">
+		<wsdl:port binding="tns:RegisterUserServiceSOAP"
+			name="UserServicePort">
+			<soap:address location="http://www.fram.com/services/UserService/registerUser" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

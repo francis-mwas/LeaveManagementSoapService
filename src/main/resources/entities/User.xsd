@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.fram.com/User"
+	xmlns:tns="http://www.fram.com/User" elementFormDefault="qualified">
+
+	<!-- User request type -->
+	<xsd:element name="UserRequestType">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="tns:UserType" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- User response type -->
+	<xsd:element name="UserResponseType">
+		<xsd:complexType>
+				<xsd:sequence>
+					<xsd:element name="emp_id" type="xsd:int" />
+					<xsd:element name="firstName" type="xsd:string" />
+					<xsd:element name="lastName" type="xsd:string" />
+					<xsd:element name="title" type="xsd:string" />
+					<xsd:element name="email" type="xsd:string" />
+					<xsd:element name="employeeId" type="xsd:string" />
+					<xsd:element name="department" type="xsd:string" />
+					<xsd:element name="station" type="xsd:string" />
+				</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<!-- Get user details request -->
+	<xsd:element name="getUserDetailsRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="employeeId" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<!-- Get user details response -->
+	<xsd:element name="getUserDetailsResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="tns:UserType" />
+			</xsd:sequence>
+		</xsd:complexType>
+	 </xsd:element>
+	
+	<!-- Users list response type -->
+	  <xsd:element name="UsersListResponseType">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="tns:UsersListType" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+	<!-- List of users -->
+	 <xsd:element name="UsersListType">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="tns:UserType"  maxOccurs="unbounded" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+	<!-- User data types required to create user and to return user details -->
+	<xsd:element name="UserType">
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name="emp_id" type="xsd:int" />
+			<xsd:element name="firstName" type="xsd:string" />
+			<xsd:element name="lastName" type="xsd:string" />
+			<xsd:element name="title" type="xsd:string" />
+			<xsd:element name="email" type="xsd:string" />
+			<xsd:element name="employeeId" type="xsd:string" />
+			<xsd:element name="department" type="xsd:string" />
+			<xsd:element name="station" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	</xsd:element>
+	<!-- Exceptions type - will handle errors that may occur on a web service -->
+	<xsd:element name="BusinessFaultType">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="errorCode" type="xsd:int" />
+				<xsd:element name="errorMessage" type="xsd:string" />
+				<xsd:element name="errorDescription" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+</xsd:schema>

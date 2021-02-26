@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userMapper">
+	<resultMap type='user' id='userData'>
+		<id property="emp_id" column="emp_id" />
+		<result property='firstName' column='firstName' />
+		<result property='lastName' column='lastName' />
+		<result property="title" column='title' />
+		<result property='email' column='email' />
+		<result property='employeeId' column='employeeId' />
+		<result property='station' column='station' />
+		<result property='department' column='department' />
+	</resultMap>
+	
+	<insert id="createUser" parameterType="user"
+		keyProperty='emp_id'>
+		INSERT INTO
+		users(emp_id,firstName,lastName,title,email,employeeId,station,department)
+		VALUES(#{emp_id},#{firstName}, #{lastName}, #{title}, #{email},#{employeeId},
+		 #{station}, #{department})
+	</insert>
+	
+	<select id="getAllUsers" resultMap="userData">
+		select * from users;
+	</select>
+	<select id="getUserByd" parameterType="string" resultMap="userData">
+ 		SELECT * FROM users WHERE employeeId=#{employeeId}
+ 	</select>
+</mapper>

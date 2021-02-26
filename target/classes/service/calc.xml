@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="CalculatorInterfaceImplService"
+	targetNamespace="http://calculator.kra.com/">
+	<wsdl:types>
+		<xs:schema elementFormDefault="unqualified"
+			targetNamespace="http://calculator.kra.com/" version="1.0">
+			<xs:element name="addition" type="tns:addition" />
+			<xs:element name="additionResponse"
+				type="tns:additionResponse" />
+			<xs:element name="subtract" type="tns:subtract" />
+			<xs:element name="subtractResponse"
+				type="tns:subtractResponse" />
+			<xs:complexType name="addition">
+				<xs:sequence>
+					<xs:element name="val1" type="xs:int" />
+					<xs:element name="val2" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="additionResponse">
+				<xs:sequence>
+					<xs:element name="return" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="subtract">
+				<xs:sequence>
+					<xs:element name="subval1" type="xs:int" />
+					<xs:element name="subval2" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="subtractResponse">
+				<xs:sequence>
+					<xs:element name="return" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="addition">
+		<wsdl:part element="tns:addition" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="additionResponse">
+		<wsdl:part element="tns:additionResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="subtract">
+		<wsdl:part element="tns:subtract" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="subtractResponse">
+		<wsdl:part element="tns:subtractResponse" name="parameters">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="CalculatorInterface">
+		<wsdl:operation name="addition">
+			<wsdl:input message="tns:addition" name="addition">
+			</wsdl:input>
+			<wsdl:output message="tns:additionResponse"
+				name="additionResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="subtract">
+			<wsdl:input message="tns:subtract" name="subtract">
+			</wsdl:input>
+			<wsdl:output message="tns:subtractResponse"
+				name="subtractResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding
+		name="CalculatorInterfaceImplServiceSoapBinding"
+		type="tns:CalculatorInterface">
+	</wsdl:binding>
+	<wsdl:service name="CalculatorInterfaceImplService">
+		<wsdl:port
+			binding="tns:CalculatorInterfaceImplServiceSoapBinding"
+			name="CalculatorInterfaceImplPort">
+			<soap:address
+				location="http://localhost:8087/Calculator/CalculatorInterface" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
